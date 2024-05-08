@@ -1,0 +1,95 @@
+diff --git a/examples/bernstein_vazirani.py b/examples/bernstein_vazirani.py
+index 2d788544..093ed87e 100644
+--- a/examples/bernstein_vazirani.py
++++ b/examples/bernstein_vazirani.py
+@@ -33,7 +33,7 @@ the original hidden integer.
+ def bernstein_vazirani():
+     import qcfpga
+ 
+-    num_qubits = 7 # The number of qubits to use
++    num_qubits = 20 # The number of qubits to use
+     a = 101 # The hidden integer, bitstring is 1100101
+ 
+     register = qcfpga.State(num_qubits) # Create a new quantum register
+@@ -51,4 +51,4 @@ def bernstein_vazirani():
+     print(results)
+ 
+ if __name__== "__main__":
+-  bernstein_vazirani()
+\ No newline at end of file
++  bernstein_vazirani()
+diff --git a/qcfpga/backend.py b/qcfpga/backend.py
+index f1d07d5e..0f67d541 100644
+--- a/qcfpga/backend.py
++++ b/qcfpga/backend.py
+@@ -213,8 +213,10 @@ __kernel void collapse(
+ """
+ 
+ # Setup the OpenCL Context here to not prompt every execution
+-context = None
+-program = None
++platform = None
++context  = None
++device   = None
++program  = None
+ 
+ 
+ class Backend:
+@@ -460,8 +462,24 @@ class Backend:
+     def release(self):
+         self.buffer.base_data.release()
+     
++def load_binary_from_file(file_path, ctx):
++    with open(file_path, "rb") as f:
++        binary = f.read()
++    return binary
++
+ def create_context():
+     global context
+     global program
+-    context = cl.create_some_context()
+-    program = cl.Program(context, kernel).build(options="-cl-no-signed-zeros -cl-mad-enable -cl-fast-relaxed-math")
++    global platform
++    global device
++    # Choose platform and create context
++    platform = cl.get_platforms()[0]  # Select the first platform
++    device = platform.get_devices()[0]  # Select the first device on this platform
++    context = cl.Context([device])  # Create a context with the above device
++
++    # Load binary file
++    binary_path = "/project/home/lxp_apps/ekieffer/03-vector_add/vector_add/bin/kernels.cl.aocx"  # Path to your binary file
++    binary = load_binary_from_file(binary_path, context)
++
++    # Create program from binary
++    program = cl.Program(context, [device], [binary]).build()
+diff --git a/qcfpga/state.py b/qcfpga/state.py
+index cb50b414..5ac9cd93 100644
+--- a/qcfpga/state.py
++++ b/qcfpga/state.py
+@@ -201,4 +201,4 @@ class State:
+         self.cu(control, target, np.pi / 2, phi, lda)
+ 
+     def cu3(self, control, target, theta, phi, lda):
+-        self.cu(control, target, theta, phi, lda)
+\ No newline at end of file
++        self.cu(control, target, theta, phi, lda)
+diff --git a/working.py b/working.py
+index 87e89bb3..fd730ec1 100644
+--- a/working.py
++++ b/working.py
+@@ -1,7 +1,7 @@
+ import qcfpga
+ import time
+ 
+-s = qcfpga.State(28)
++s = qcfpga.State(20)
+ h = qcfpga.gate.h()
+ 
+ s.apply_all(h)
+@@ -9,4 +9,4 @@ s.apply_all(h)
+ 
+ 
+ print(s.measure(1000))
+-# print(s.backend.measure(samples=10000))
+\ No newline at end of file
++# print(s.backend.measure(samples=10000))
