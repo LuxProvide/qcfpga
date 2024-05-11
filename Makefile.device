@@ -1,0 +1,98 @@
+# Copyright (C) 2013-2020 Altera Corporation, San Jose, California, USA. All rights reserved.
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this
+# software and associated documentation files (the "Software"), to deal in the Software
+# without restriction, including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to
+# whom the Software is furnished to do so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in all copies or
+# substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+# 
+# This agreement shall be governed in all respects by the laws of the State of California and
+# by the laws of the United States of America.
+# This is a GNU Makefile.
+
+# You must configure INTELFPGAOCLSDKROOT to point the root directory of the Intel(R) FPGA SDK for OpenCL(TM)
+# software installation.
+# See http://www.altera.com/literature/hb/opencl-sdk/aocl_getting_started.pdf 
+# for more information on installing and configuring the Intel(R) FPGA SDK for OpenCL(TM).
+
+ifeq ($(VERBOSE),1)
+ECHO := 
+else
+ECHO := @
+endif
+
+# OpenCL compile and link flags.
+AOCL_COMPILE_CONFIG := $(shell aocl compile-config )
+AOCL_LINK_LIBS := $(shell aocl ldlibs )
+AOCL_LINK_FLAGS := $(shell aocl ldflags )
+# Linking with defences enabled
+AOCL_LINK_FLAGS += -z noexecstack
+AOCL_LINK_FLAGS += -Wl,-z,relro,-z,now
+AOCL_LINK_FLAGS += -Wl,-Bsymbolic
+AOCL_LINK_FLAGS += -pie
+AOCL_LINK_CONFIG := $(AOCL_LINK_FLAGS) $(AOCL_LINK_LIBS)
+
+# OpenCL Board
+BOARD ?= 
+
+
+AOC_FLAGS := -fp-relaxed -DINTEL_CL -fast-compile -parallel=16  -I ../pyopencl/pyopencl/cl
+
+# Compiler
+CXX := g++
+
+# Offline compiler
+AOC:= $(shell which aoc)
+
+# Target
+TARGET_DIR := bin
+CL_DIR := cl_kernels
+
+
+
+# OpenCL Files
+#SRC_CL := vector_add.cl
+SRC_CL := kernels.cl
+TARGET_CL :=$(patsubst %.aocx,%.cl,$(SRC_CL))
+
+
+# Emulation for device
+emulation :
+ifeq ($(BOARD),)
+	$(AOC) -march=emulator $(AOC_FLAGS) -o $(TARGET_DIR)/$(TARGET_CL) $(CL_DIR)/$(SRC_CL)
+else
+	$(AOC) -march=emulator -board=$(BOARD) $(AOC_FLAGS)  -o $(TARGET_CL) $(CL_DIR)/$(SRC_CL)
+endif
+
+# Build for device
+device : 
+ifeq ($(BOARD),)
+	$(AOC) $(AOC_FLAGS) -o $(TARGET_DIR)/$(TARGET_CL) $(CL_DIR)/$(SRC_CL)
+else
+	$(AOC) -board=$(BOARD) $(AOC_FLAGS)  -o $(TARGET_CL) $(CL_DIR)/$(SRC_CL)
+endif
+
+# Build for device
+profile :
+ifeq ($(BOARD),)
+	$(AOC) -profile=all $(AOC_FLAGS) -o $(TARGET_DIR)/$(TARGET_CL) $(CL_DIR)/$(SRC_CL)
+else
+	$(AOC) -profile=all -board=$(BOARD) $(AOC_FLAGS)  -o $(TARGET_CL) $(CL_DIR)/$(SRC_CL)
+endif
+
+# Standard make targets
+clean :
+	$(ECHO)rm -f $(TARGET_DIR)/$(TARGET_CL)
+
+
+.PHONY : clean device

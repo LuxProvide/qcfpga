@@ -10,6 +10,8 @@
 *.ko
 *.obj
 *.elf
+*.aocx
+bin/
 
 # Linker output
 *.ilk

@@ -10,7 +10,7 @@ To run a simple quantum circuit, you can use something like this,
 
 .. code-block:: python
 
-    # Import QCGPU
+    # Import QCFPGA
     import qcfpga
 
     # Create a new quantum register with 2 qubits
@@ -38,5 +38,5 @@ along with how often they occurred.
 
     {'00': 486, '11': 514}
 
-There are a few different ways to do things using QCGPU, 
+There are a few different ways to do things using QCFPGA, 
 so you should check out the rest of the documentation too

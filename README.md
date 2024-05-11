@@ -1,33 +1,8 @@
-# QCGPU
+# QCFPGA
 
-[![Travis
-(.org)](https://img.shields.io/travis/QCGPU/qcfpga.svg?style=for-the-badge)](https://travis-ci.org/QCGPU/qcfpga)
-[![PyPi
-Version](https://img.shields.io/pypi/v/qcfpga.svg?style=for-the-badge)](https://pypi.python.org/pypi/qcfpga)
-[![License](https://img.shields.io/pypi/l/qcfpga.svg?style=for-the-badge)](https://pypi.python.org/pypi/qcfpga/)
-[![GitHub
-stars](https://img.shields.io/github/stars/qcfpga/qcfpga.svg?style=for-the-badge&label=Stars)](https://github.com/QCGPU/qcfpga)
-[![Unitary Fund](https://img.shields.io/badge/Supported%20By-UNITARY%20FUND-brightgreen.svg?style=for-the-badge)](http://unitary.fund)
+* QCFPGA is a fork of the [QCGPU](https://github.com/libtangle/qcgpu), an open source, high performance & hardware accelerated, quantum computer simulator based on this [research paper](https://arxiv.org/abs/1805.00988).
+* Contrary to QCGPU, QCFPGA can be execute on Intel FPGA such as the Intel Stratix 10MX 16 GB FPGA (see https://docs.lxp.lu/system/overview/)
 
-Open Source, High Performance & Hardware Accelerated, Quantum Computer
-Simulator. Read the [research paper](https://arxiv.org/abs/1805.00988).
 
-**Features:**
 
-  - Written with OpenCL. Accelerated your simulations with GPUs and other
-    accelerators, while still running cross device and cross platform.
-  - Simulation of arbitrary quantum circuits
-  - Includes example algorithm implementations
-  - Support for arbitrary gate creation/application, with many built in.
 
-## Installing
-
-This library is distributed on
-[PyPI](https://pypi.python.org/pypi/qcfpga) and can be installed using
-pip:
-
-```bash
-$ pip install qcfpga
-```
-
-For more information read the full [installing docs](https://qcfpga.github.io/qcfpga/install.html).

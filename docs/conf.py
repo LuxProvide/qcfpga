@@ -19,9 +19,9 @@ sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
-project = u'QCGPU'
-copyright = u'2018, Adam Kelly'
-author = u'Adam Kelly'
+project = u'QCFPGA'
+copyright = u'2024, LXP '
+author = u'Emmanuel Kieffer based on Adam Kelly \'s QCGPU'
 
 # The short X.Y version
 version = u''
@@ -64,7 +64,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -80,7 +80,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'press'
+html_theme = 'classic'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -107,7 +107,7 @@ html_theme = 'press'
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'QCGPUdoc'
+htmlhelp_basename = 'QCFPGAdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -134,8 +134,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'QCGPU.tex', u'QCGPU Documentation',
-     u'Adam Kelly', 'manual'),
+    (master_doc, 'QCFPGA.tex', u'QCFPGA Documentation',
+     u'Emmanuel Kieffer (based on Adam kelly \'s QCGPU)', 'manual'),
 ]
 
 

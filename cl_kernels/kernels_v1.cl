@@ -3,6 +3,18 @@
 #define __HBM__(__X__) __global __attribute((buffer_location(__X__)))
 
 
+/*
+ * Dummy kernel
+ */
+
+__kernel void load(__HBM__("HBM0") cfloat_t * restrict amplitudes)
+{
+
+    int const global_id = get_global_id(0);
+
+}
+
+
 
 /*
  * Returns the nth number where a given digit
@@ -28,7 +40,7 @@ static int nth_cleared(int n, int target)
  *  C D
  */
 __kernel void apply_gate(
-    __HBM__("HBM0") cfloat_t *amplitudes,
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
     int target,
     cfloat_t A,
     cfloat_t B,
@@ -53,7 +65,7 @@ __kernel void apply_gate(
  * Applies a controlled single qubit gate to the register.
  */
 __kernel void apply_controlled_gate(
-    __HBM__("HBM0") cfloat_t *amplitudes,
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
     int control,
     int target,
     cfloat_t A,
@@ -86,7 +98,7 @@ __kernel void apply_controlled_gate(
  * Applies a controlled-controlled single qubit gate to the register.
  */
 __kernel void apply_controlled_controlled_gate(
-    __HBM__("HBM0") cfloat_t *amplitudes,
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
     int control,
     int control_2,
     int target,
@@ -123,8 +135,8 @@ __kernel void apply_controlled_controlled_gate(
  * Get a single amplitude
  */
 __kernel void get_single_amplitude(
-    __HBM__("HBM0") cfloat_t *const amplitudes,
-    __HBM__("HBM1") cfloat_t *out,
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
+    __HBM__("HBM1") cfloat_t * restrict out,
     int i)
 {
     out[0] = amplitudes[i];
@@ -134,8 +146,8 @@ __kernel void get_single_amplitude(
  * Calculates The Probabilities Of A State Vector
  */
 __kernel void calculate_probabilities(
-    __HBM__("HBM0") cfloat_t *const amplitudes,
-    __HBM__("HBM1") float *probabilities)
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
+    __HBM__("HBM1") float * restrict probabilities)
 {
     int const state = get_global_id(0);
     cfloat_t amp = amplitudes[state];
@@ -148,7 +160,7 @@ __kernel void calculate_probabilities(
  *                                          ^ target
  */
 __kernel void initialize_register(
-    __HBM__("HBM0") cfloat_t *amplitudes,
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
     int const target)
 {
     int const state = get_global_id(0);
@@ -166,7 +178,7 @@ __kernel void initialize_register(
  * Collapses a qubit in the register
  */
 __kernel void collapse(
-    __HBM__("HBM0") cfloat_t *amplitudes, 
+    __HBM__("HBM0") cfloat_t * restrict amplitudes, 
     int const target,
     int const outcome, 
     float const norm)
@@ -187,8 +199,8 @@ __kernel void collapse(
  */
 
 __kernel void probability_single(
-    __HBM__("HBM0") cfloat_t *amplitudes,
-    __HBM__("HBM1") float *probabilities,
+    __HBM__("HBM0") cfloat_t * restrict amplitudes,
+    __HBM__("HBM1") float * restrict probabilities,
     int target)
 
 {
