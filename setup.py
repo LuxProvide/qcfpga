@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="qcfpga",
-    version="0.0.4",
+    version="0.0.1",
     author="Emmanuel KIEFFER",
     author_email="Emmanuel KIEFFER",
     description="An FPGA-OpenCL based quantum computer simulator based on Adam's Kelly QCGPU",
