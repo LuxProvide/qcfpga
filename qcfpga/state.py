@@ -117,10 +117,10 @@ class State:
         return self.backend.measure_first(num, samples)
 
     def amplitudes(self):
-        return self.backend.amplitudes()[0]
+        return self.backend.amplitudes()
     
     def probabilities(self):
-        return self.backend.probabilities()[0]
+        return self.backend.probabilities()
 
     def __repr__(self):
         """A string representation of the state"""
