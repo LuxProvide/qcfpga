@@ -2,12 +2,12 @@ Quantum Operations
 ==================
 
 There are a number of operations you can perform on quantum registers
-with QCGPU.
+with QCFPGA.
 
 Measurement
 -----------
 
-Measurement of a register in QCGPU doesn’t collapse the state (although
+Measurement of a register in QCFPGA doesn’t collapse the state (although
 this may be added in the future). When you measure the state, you can
 specify the number of times to sample. The output of this ``measure``
 function is a dictionary with the bitstrings of the outputs, along with
@@ -41,7 +41,7 @@ Again, the state is not collapsed
 Probability
 -----------
 
-QCGPU provides another method for getting the probability of each
+QCFPGA provides another method for getting the probability of each
 outcome.
 
 The probability of getting an outcome :math:`j` from a state

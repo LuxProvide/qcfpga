@@ -24,7 +24,7 @@ If you run into any issues, you should try installing from source.
 Installing from Source
 ----------------------
 
-You can install QCGPU from the source. First, clone the repository off
+You can install QCFPGA from the source. First, clone the repository off
 GitHub:
 
 .. code:: sh

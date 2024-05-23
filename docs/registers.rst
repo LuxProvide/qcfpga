@@ -2,7 +2,7 @@
 Quantum Registers
 =================
 
-QCGPU provides a class to represent the register, ``qcfpga.State``. The
+QCFPGA provides a class to represent the register, ``qcfpga.State``. The
 register class stores (on the OpenCL device) a state vector. This state
 vector is a chunk of memory, the size of which is:
 

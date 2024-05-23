@@ -7,7 +7,7 @@ to implement quantum algorithms.
 Built-In Gates
 --------------
 
-There are a number of gates built into QCGPU. They can all be applied
+There are a number of gates built into QCFPGA. They can all be applied
 the same way:
 
 .. code:: python
@@ -77,7 +77,7 @@ The following applies a Hadamard gate to the whole register,
 User Defined Gates
 ------------------
 
-Gates in QCGPU are represented by the ``qcfpga.Gate`` class.
+Gates in QCFPGA are represented by the ``qcfpga.Gate`` class.
 
 The only gates that can be defined by the user are single qubit gates.
 
